@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DB_USERNAME=admin
+      - DB_PASSWORD=secret
+      - DB_HOST=db
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+  db:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+volumes:
+  mongodb_data:
